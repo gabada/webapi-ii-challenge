@@ -34,4 +34,20 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  db.remove(id).then(delId => {
+    console.log(delId);
+    if (delId) {
+      db.findById(delId).then(post => {
+        res.status(200).json(post);
+      });
+    } else {
+      return res
+        .status(400)
+        .json({ message: 'The post with the specified ID does not exist.' });
+    }
+  });
+});
+
 module.exports = router;
