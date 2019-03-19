@@ -36,10 +36,10 @@ router.get('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  db.remove(id).then(delId => {
-    console.log(delId);
-    if (delId) {
-      db.findById(delId).then(post => {
+  console.log('ID', id);
+  db.findById(id).then(post => {
+    if (post.id) {
+      db.remove(id).then(delId => {
         res.status(200).json(post);
       });
     } else {
