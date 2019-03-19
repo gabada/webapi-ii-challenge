@@ -1,12 +1,11 @@
 const express = require('express');
-const db = require('./data/db.js');
-
+const cors = require('cors');
 const postRoutes = require('./posts/postRoutes');
 
 const port = 5000;
 const server = express();
 
-server.use(express.json());
+server.use(express.json(), cors());
 server.use('/api/posts', postRoutes);
 
 server.listen(port, () => {
