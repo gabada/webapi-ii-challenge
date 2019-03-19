@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
   const { title, contents } = req.body;
   const newPost = { title, contents };
   if (!title || !contents) {
-    return res.status(400).json({
+    res.status(400).json({
       errorMessage: 'Please provide title and contents for the post.'
     });
   }
@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
       });
     })
     .catch(err => {
-      return res.status(500).json({
+      res.status(500).json({
         error: 'There was an error while saving the post to the database'
       });
     });
@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
       res.status(200).json(posts);
     })
     .catch(err => {
-      return res
+      res
         .status(500)
         .json({ error: 'The posts information could not be retrieved.' });
     });
@@ -43,13 +43,13 @@ router.get('/:id', (req, res) => {
       if (post.id) {
         res.status(200).json(post);
       } else {
-        return res
+        res
           .status(404)
           .json({ message: 'The post with the specified ID does not exist.' });
       }
     })
     .catch(err => {
-      return res
+      res
         .status(500)
         .json({ error: 'The post information could not be retrieved.' });
     });
@@ -60,14 +60,14 @@ router.put('/:id', (req, res) => {
   const { title, contents } = req.body;
   const updatedInfo = { title, contents };
   if (!title || !contents) {
-    return res.status(400).json({
+    res.status(400).json({
       errorMessage: 'Please provide title and contents for the post.'
     });
   }
   db.update(id, updatedInfo)
     .then(updatePost => {
       if (!id) {
-        return res
+        res
           .status(404)
           .json({ message: 'The post with the specified ID does not exist.' });
       } else {
@@ -77,7 +77,7 @@ router.put('/:id', (req, res) => {
       }
     })
     .catch(err => {
-      return res
+      res
         .status(500)
         .json({ error: 'The post information could not be modified.' });
     });
@@ -91,7 +91,7 @@ router.delete('/:id', (req, res) => {
         res.status(200).json(post);
       });
     } else {
-      return res
+      res
         .status(400)
         .json({ message: 'The post with the specified ID does not exist.' });
     }
