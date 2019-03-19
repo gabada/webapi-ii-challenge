@@ -36,9 +36,8 @@ router.get('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  console.log('ID', id);
   db.findById(id).then(post => {
-    if (post.id) {
+    if (post) {
       db.remove(id).then(delId => {
         res.status(200).json(post);
       });
